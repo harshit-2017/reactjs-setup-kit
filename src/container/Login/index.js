@@ -1,32 +1,60 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { login, signUp } from "actions/index";
+import { login, setLanguage } from "actions/index";
+import "App.css";
+
+import { Layout, Menu } from "antd";
+import {
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  UploadOutlined,
+} from "@ant-design/icons";
+import strings from "utils/Multilingual";
+
+const { Header, Sider, Content } = Layout;
+
 class Login extends Component {
   onButtonPressed = () => {
     this.props.login();
   };
 
+  onToggleLanguage = () => {
+    strings.setLanguage(this.props.language === "it" ? "en" : "it");
+    this.setState({});
+    this.props.setLanguage(this.props.language === "it" ? "en" : "it");
+  };
+
+  state = {
+    collapsed: false,
+  };
+
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
+
   render() {
     const { name } = this.props;
     return (
-      <div>
-        <h1>{name}</h1>
-        <p>
-          <button
-            onClick={() => {
-              this.onButtonPressed();
-            }}
-          >
-            Login
-          </button>
-        </p>
-      </div>
+      <h1
+        onClick={() => {
+          this.onToggleLanguage();
+        }}
+      >
+        {strings.boiledEgg}
+      </h1>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { name: state.login.data.title };
+  return {
+    name: state.login.data.title,
+    language: state.userPreference.language,
+  };
 }
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login, setLanguage })(Login);

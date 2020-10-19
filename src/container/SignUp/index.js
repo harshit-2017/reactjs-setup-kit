@@ -1,10 +1,10 @@
 import React, { Component } from "react";
+import strings from "utils/Multilingual";
 class SignUp extends Component {
   render() {
-    throw new Error("gfgfgfgf");
     return (
       <div>
-        <h1>SignUp</h1>
+        <h1>{strings.choice}</h1>
       </div>
     );
   }
