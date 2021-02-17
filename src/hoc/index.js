@@ -1,7 +1,10 @@
+import { Spin } from "antd";
 import React, { PureComponent, Suspense } from "react";
 import strings from "utils/Multilingual";
-import ErrorBoundary from "../utils/errorBoundary";
-import { store } from "../store";
+import { store } from "store";
+import ErrorBoundary from "utils/errorBoundary";
+import "../App.css";
+
 const AppContainerWithErrorBoundary = (WrappedComponent) => {
   return class ReduxWrapper extends PureComponent {
     state = { userPreference: store.getState().userPreference };
@@ -12,7 +15,13 @@ const AppContainerWithErrorBoundary = (WrappedComponent) => {
     render() {
       return (
         <ErrorBoundary>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="Center">
+                <Spin size="large" />
+              </div>
+            }
+          >
             <WrappedComponent {...this.props} />
           </Suspense>
         </ErrorBoundary>

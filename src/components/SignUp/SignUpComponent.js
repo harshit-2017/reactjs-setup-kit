@@ -1,13 +1,15 @@
-import React, { Component } from "react";
-import "./LoginComponent.css";
-export default function LoginComponent() {
-  const [username, setEmail] = React.useState("");
+import "./SignupComponent.css";
+import React from "react";
+export default function SignupComponent() {
+  const [username, setUserName] = React.useState("");
+  const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const handleSubmit = (event) => {
     console.log(`
-      Email: ${username}
+      Name: ${name}
       Password: ${password}
+      UserName: ${username}
     `);
 
     event.preventDefault();
@@ -15,15 +17,24 @@ export default function LoginComponent() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
-
+      <h1>Create User</h1>
+      <label>
+        Name:
+        <input
+          name="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </label>
       <label>
         Username:
         <input
           name="username"
           type="text"
           value={username}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
           required
         />
       </label>
@@ -39,7 +50,7 @@ export default function LoginComponent() {
         />
       </label>
 
-      <button>Login</button>
+      <button>Create User</button>
     </form>
   );
 }

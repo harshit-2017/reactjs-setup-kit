@@ -3,6 +3,7 @@ import { ACTION_TYPES } from "../constants";
 
 export function login() {
   return async (dispatch, getState) => {
+    console.log(getState(), "getStategetStategetState");
     dispatch({
       type: ACTION_TYPES.LOGIN_REQUEST,
     });

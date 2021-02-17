@@ -3,6 +3,12 @@
   text-align: center;
 }
 
+.Center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -16,7 +22,7 @@
 #components-layout-demo-top .logo {
   width: 120px;
   height: 31px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgb(255, 255, 255);
   margin: 16px 24px 16px 0;
   float: left;
 }
@@ -38,7 +44,7 @@
   background: #fff;
 }
 .App-header {
-  background-color: #282c34;
+  background-color: #fff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
