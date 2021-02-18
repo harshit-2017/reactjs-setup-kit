@@ -2,17 +2,11 @@ import React, { Component } from "react";
 import "./OTPVerificationComponent.css";
 import OtpInput from "react-otp-input";
 
-export default function UserVerificationComponent() {
+export default function UserVerificationComponent(props) {
+  const { handleSubmit, error } = props;
+
   const [otp, setOtp] = React.useState("");
   const handleChange = (otp) => setOtp(otp);
-
-  const handleSubmit = (event) => {
-    console.log(`
-      OTP: ${otp}
-    `);
-
-    event.preventDefault();
-  };
 
   const mystyle = {
     display: "flex",
@@ -20,7 +14,12 @@ export default function UserVerificationComponent() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(event) => {
+        handleSubmit({ OTP: otp });
+        event.preventDefault();
+      }}
+    >
       <h1>OTP Verification</h1>
 
       <OtpInput
@@ -32,7 +31,9 @@ export default function UserVerificationComponent() {
         numInputs={4}
         separator={<span>-</span>}
       />
-
+      {error.errorMessage != "" && (
+        <label style={{ color: "red" }}>{error.errorMessage}</label>
+      )}
       <button>Submit</button>
     </form>
   );

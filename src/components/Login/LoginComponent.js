@@ -1,43 +1,36 @@
 import React, { Component } from "react";
 import "./LoginComponent.css";
-export default function LoginComponent() {
-  const [username, setEmail] = React.useState("");
+import { InputComponent } from "components/CommonComponents";
+export default function LoginComponent(props) {
+  const { error, handleSubmit } = props;
+  const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const handleSubmit = (event) => {
-    console.log(`
-      Email: ${username}
-      Password: ${password}
-    `);
-
-    event.preventDefault();
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={(event) => {
+        handleSubmit({ username: username, password: password });
+        event.preventDefault();
+      }}
+    >
       <h1>Login</h1>
+      <InputComponent
+        label="Username:"
+        name="username"
+        type="text"
+        value={username}
+        onChange={(value) => setUserName(value)}
+        error={error}
+      />
 
-      <label>
-        Username:
-        <input
-          name="username"
-          type="text"
-          value={username}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-
-      <label>
-        Password:
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
+      <InputComponent
+        label="Password::"
+        name="password"
+        type="password"
+        value={password}
+        onChange={(value) => setPassword(value)}
+        error={error}
+      />
 
       <button>Login</button>
     </form>
