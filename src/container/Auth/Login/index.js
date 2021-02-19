@@ -37,7 +37,7 @@ class Login extends Component {
           errorMessage: "",
         },
       });
-      this.props.login(value);
+      this.props.login(value, this.props);
     }
   };
   render() {

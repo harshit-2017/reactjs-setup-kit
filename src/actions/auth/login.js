@@ -1,7 +1,7 @@
 import commonApi from "utils/commonApi";
 import { ACTION_TYPES } from "../../constants";
 
-export function login(loginDetails) {
+export function login(loginDetails, props) {
   return async (dispatch) => {
     dispatch({
       type: ACTION_TYPES.LOGIN_REQUEST,
@@ -19,6 +19,7 @@ export function login(loginDetails) {
             type: ACTION_TYPES.LOGIN_COMPLETE,
             payload: data.userData,
           });
+          props.history.push("/home");
         } else {
           dispatch({
             type: ACTION_TYPES.LOGIN_FAIL,
