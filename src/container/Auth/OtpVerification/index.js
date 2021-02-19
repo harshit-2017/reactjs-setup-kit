@@ -1,4 +1,4 @@
-import { login, setLanguage } from "actions";
+import { otp } from "actions";
 import "App.css";
 import React, { Component, Suspense } from "react";
 import { connect } from "react-redux";
@@ -28,19 +28,22 @@ class OtpVerification extends Component {
           errorMessage: "",
         },
       });
-      console.log(value.OTP);
+      this.props.otp(value, this.props);
     }
   };
 
   render() {
     const { error } = this.state;
+    const { loader } = this.props;
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <OTPVerificationComponent
           handleSubmit={(value) => {
             this.handleSubmit(value);
           }}
+          loading={loader}
           error={error}
+          autherror={this.props.error}
         />
       </Suspense>
     );
@@ -49,12 +52,9 @@ class OtpVerification extends Component {
 
 function mapStateToProps(state) {
   return {
-    name: state.login.data.title,
-    loader: state.login.loader,
-    language: state.userPreference.language,
+    loader: state.otp.loader,
+    error: state.otp.error,
   };
 }
 
-export default connect(mapStateToProps, { login, setLanguage })(
-  OtpVerification
-);
+export default connect(mapStateToProps, { otp })(OtpVerification);

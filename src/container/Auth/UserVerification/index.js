@@ -1,4 +1,4 @@
-import { login, setLanguage } from "actions";
+import { userVerification } from "actions";
 import "App.css";
 import React, { Component, Suspense } from "react";
 import { connect } from "react-redux";
@@ -11,11 +11,32 @@ const UserVerificationComponent = React.lazy(() =>
 class UserVerification extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       visible: false,
       error: { errorField: "", errorMessage: "" },
     };
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(
+  //     nextProps.userVerificationData,
+  //     this.props.userVerificationData,
+  //     "userVerificationDatauserVerificationData"
+  //   );
+  //   if (nextProps.userVerificationData != this.props.userVerificationData) {
+  //     if (nextProps.userVerificationData) {
+  //       if (!this.state.visible) {
+  //         this.setState({ visible: true }, () => {
+  //           this.showModal();
+  //         });
+  //       }
+  //     }
+  //   }
+
+  //   return true;
+  // }
+
   handleSubmit = (value) => {
     console.log(value, "valuevaluevaluevalue");
     console.log(value, "valuevaluevaluevalue");
@@ -41,57 +62,60 @@ class UserVerification extends Component {
           errorMessage: "",
         },
       });
-      Modal.confirm({
-        title: "Confirm Add Sibling",
-        icon: <ExclamationCircleOutlined />,
-        content: "Do you want to add sibling?",
-        okText: "Yes",
-        cancelText: "No",
-        onOk: () => {
-          this.okPress();
-        },
-        onCancel: () => {
-          this.showModal();
-        },
-      });
+      this.props.userVerification(value, this.props);
     }
   };
 
-  showModal = () => {
-    this.setState((state, props) => {
-      return { visible: !state.visible };
-    });
-  };
-
   okPress = () => {
-    this.showModal();
     alert("ok");
   };
+
+  cancelPress = () => {
+    alert("cancel");
+  };
+
+  showModal = () => {};
 
   render() {
     console.log("render component");
     const { error } = this.state;
+    const { loader } = this.props;
+
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <UserVerificationComponent
           handleSubmit={(value) => {
             this.handleSubmit(value);
           }}
+          loading={loader}
           error={error}
+          autherror={this.props.error}
         />
       </Suspense>
     );
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  if (state.userVerification.userVerificationData) {
+    Modal.confirm({
+      title: "Confirm Add Sibling",
+      icon: <ExclamationCircleOutlined />,
+      content: "Do you want to add sibling?",
+      okText: "Yes",
+      cancelText: "No",
+      onOk: () => {
+        ownProps.history.push("/signup");
+      },
+      onCancel: () => {
+        ownProps.history.push("/login");
+      },
+    });
+  }
   return {
-    name: state.login.data.title,
-    loader: state.login.loader,
-    language: state.userPreference.language,
+    loader: state.userVerification.loader,
+    userVerificationData: state.userVerification.userVerificationData,
   };
 }
 
-export default connect(mapStateToProps, { login, setLanguage })(
-  UserVerification
-);
+export default connect(mapStateToProps, { userVerification })(UserVerification);

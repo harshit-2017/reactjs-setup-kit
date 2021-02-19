@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import "./UserVerificationComponent.css";
-import { InputComponent } from "components/CommonComponents";
+import {
+  InputComponent,
+  LoaderButtonComponent,
+} from "components/CommonComponents";
+
 import "antd/dist/antd.css";
 
 const UserVerificationComponent = (props) => {
-  const { handleSubmit, error } = props;
+  const { handleSubmit, loading, error, autherror } = props;
 
   const [username, setUserName] = React.useState("");
 
@@ -26,8 +30,12 @@ const UserVerificationComponent = (props) => {
           setUserName(value);
         }}
       />
-
-      <button className={"buttonStl"}>Submit</button>
+      <LoaderButtonComponent
+        className={"buttonStl"}
+        loading={loading}
+        text="Submit"
+      />
+      {autherror != "" && <label style={{ color: "red" }}>{autherror}</label>}
     </form>
   );
 };

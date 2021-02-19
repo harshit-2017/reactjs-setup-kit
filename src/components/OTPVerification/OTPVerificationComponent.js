@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "./OTPVerificationComponent.css";
 import OtpInput from "react-otp-input";
-
+import { LoaderButtonComponent } from "components/CommonComponents";
 export default function UserVerificationComponent(props) {
-  const { handleSubmit, error } = props;
+  const { handleSubmit, loading, error, autherror } = props;
 
   const [otp, setOtp] = React.useState("");
   const handleChange = (otp) => setOtp(otp);
@@ -34,7 +34,9 @@ export default function UserVerificationComponent(props) {
       {error.errorMessage != "" && (
         <label style={{ color: "red" }}>{error.errorMessage}</label>
       )}
-      <button>Submit</button>
+
+      <LoaderButtonComponent loading={loading} text="Submit" />
+      {autherror != "" && <label style={{ color: "red" }}>{autherror}</label>}
     </form>
   );
 }

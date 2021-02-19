@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import "./LoginComponent.css";
-import { InputComponent } from "components/CommonComponents";
+import {
+  InputComponent,
+  LoaderButtonComponent,
+} from "components/CommonComponents";
+
 export default function LoginComponent(props) {
-  const { error, handleSubmit } = props;
+  const { error, handleSubmit, loading } = props;
   const [username, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -31,8 +35,7 @@ export default function LoginComponent(props) {
         onChange={(value) => setPassword(value)}
         error={error}
       />
-
-      <button>Login</button>
+      <LoaderButtonComponent loading={loading} text="Login" />
     </form>
   );
 }

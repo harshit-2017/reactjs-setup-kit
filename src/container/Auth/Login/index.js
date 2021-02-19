@@ -1,4 +1,4 @@
-import { login, setLanguage } from "actions";
+import { login } from "actions";
 import "App.css";
 import React, { Component, Suspense } from "react";
 import { connect } from "react-redux";
@@ -37,14 +37,16 @@ class Login extends Component {
           errorMessage: "",
         },
       });
-      console.log(value);
+      this.props.login(value);
     }
   };
   render() {
     const { error } = this.state;
+    const { loader } = this.props;
     return (
       <Suspense fallback={<div>Loading...</div>}>
         <LoginComponent
+          loading={loader}
           error={error}
           handleSubmit={(value) => {
             this.handleSubmit(value);
@@ -57,10 +59,8 @@ class Login extends Component {
 
 function mapStateToProps(state) {
   return {
-    name: state.login.data.title,
     loader: state.login.loader,
-    language: state.userPreference.language,
   };
 }
 
-export default connect(mapStateToProps, { login, setLanguage })(Login);
+export default connect(mapStateToProps, { login })(Login);
